@@ -15,8 +15,11 @@ const SimpleVideoGrid = ({
   const highlightedPlayer = highlightedPlayerId
     ? players[highlightedPlayerId]
     : null;
+  console.log("highlightedPlayerId svg", highlightedPlayerId);
+  console.log("highlightedPlayer  svg", highlightedPlayer);
+
   const otherPlayers = playerEntries.filter(
-    ([id]) => id !== highlightedPlayerId
+    ([id]) => id !== highlightedPlayerId,
   );
 
   const getGridCols = (count) => {
@@ -107,12 +110,20 @@ const SimpleVideoGrid = ({
                 className="object-cover"
                 onReady={(player) => {
                   // Set audio output device when player is ready
-                  if (selectedAudioOutput && selectedAudioOutput !== 'default') {
+                  if (
+                    selectedAudioOutput &&
+                    selectedAudioOutput !== "default"
+                  ) {
                     const videoElement = player.getInternalPlayer();
                     if (videoElement && videoElement.setSinkId) {
-                      videoElement.setSinkId(selectedAudioOutput).catch(err => {
-                        console.warn('Failed to set audio output device:', err);
-                      });
+                      videoElement
+                        .setSinkId(selectedAudioOutput)
+                        .catch((err) => {
+                          console.warn(
+                            "Failed to set audio output device:",
+                            err,
+                          );
+                        });
                     }
                   }
                 }}
@@ -184,7 +195,7 @@ const SimpleVideoGrid = ({
         prevProps.totalCount === nextProps.totalCount &&
         prevProps.isAudioEnabled === nextProps.isAudioEnabled // Add isAudioEnabled to comparison
       );
-    }
+    },
   );
 
   PlayerCard.displayName = "PlayerCard";
@@ -214,7 +225,7 @@ const SimpleVideoGrid = ({
         <div className="flex justify-center items-center w-full">
           <div
             className={`grid gap-4 ${getGridCols(
-              otherPlayers.length
+              otherPlayers.length,
             )} w-full max-w-6xl justify-items-center`}
           >
             {otherPlayers.map(([playerId, player]) => (

@@ -69,9 +69,9 @@ const usePlayer = (myId, roomId, peer, mediaControls = {}) => {
     if (!socket || !myId) return; // Safety check
 
     // Toggle the actual media stream
-    if (toggleMediaVideo) {
-      toggleMediaVideo();
-    }
+    // if (toggleMediaVideo) {
+    //   toggleMediaVideo();
+    // }
 
     setPlayers((prev) => {
       const copy = cloneDeep(prev);

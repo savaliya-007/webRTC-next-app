@@ -8,7 +8,7 @@ import {
 const useMediaStream = () => {
   const [state, setState] = useState(null);
   const [isAudioEnabled, setIsAudioEnabled] = useState(false);
-  const [isVideoEnabled, setIsVideoEnabled] = useState(false);
+  // const [isVideoEnabled, setIsVideoEnabled] = useState(false);
   const [error, setError] = useState(null);
   const [permissions, setPermissions] = useState({
     audio: false,
@@ -46,7 +46,7 @@ const useMediaStream = () => {
       });
       const newStream = await navigator.mediaDevices.getUserMedia({
         audio: audioConstraints,
-        video: state.getVideoTracks().length > 0,
+        video: false,
       });
 
       // Replace audio track in existing stream
@@ -151,7 +151,7 @@ const useMediaStream = () => {
 
         const stream = await navigator.mediaDevices.getUserMedia({
           audio: audioConstraints,
-          video: true,
+          video: false,
         });
 
         console.log("Setting your stream");
@@ -159,7 +159,7 @@ const useMediaStream = () => {
         console.log("Video tracks:", stream.getVideoTracks().length);
 
         setState(stream);
-        setPermissions({ audio: true, video: true });
+        setPermissions({ audio: true, video: false });
 
         // Set initial states based on track enabled status
         const audioTracks = stream.getAudioTracks();
@@ -213,30 +213,29 @@ const useMediaStream = () => {
     return false;
   };
 
-  const toggleVideo = () => {
-    if (state) {
-      const videoTracks = state.getVideoTracks();
-      if (videoTracks.length > 0) {
-        const newState = !videoTracks[0].enabled;
-        videoTracks[0].enabled = newState;
-        setIsVideoEnabled(newState);
-        console.log("Video toggled:", newState ? "ON" : "OFF");
-        return newState;
-      } else {
-        console.warn("No video tracks available");
-      }
-    } else {
-      console.warn("No media stream available");
-    }
-    return false;
-  };
+  // const toggleVideo = () => {
+  //   if (state) {
+  //     const videoTracks = state.getVideoTracks();
+  //     if (videoTracks.length > 0) {
+  //       const newState = !videoTracks[0].enabled;
+  //       videoTracks[0].enabled = newState;
+  //       setIsVideoEnabled(newState);
+  //       console.log("Video toggled:", newState ? "ON" : "OFF");
+  //       return newState;
+  //     } else {
+  //       console.warn("No video tracks available");
+  //     }
+  //   } else {
+  //     console.warn("No media stream available");
+  //   }
+  //   return false;
+  // };
 
   return {
     stream: state,
     isAudioEnabled,
-    isVideoEnabled,
+    isVideoEnabled: false,
     toggleAudio,
-    toggleVideo,
     error,
     permissions,
     audioDevices,
