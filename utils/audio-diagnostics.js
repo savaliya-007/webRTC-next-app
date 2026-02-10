@@ -378,7 +378,7 @@ export const optimizeAudioSettings = (constraints = {}) => {
  */
 export const applyAudioOutputDevice = async (deviceId) => {
   try {
-    const audioElements = document.querySelectorAll('audio, video');
+    const audioElements = document.querySelectorAll('audio');
     const results = [];
     
     for (const element of audioElements) {

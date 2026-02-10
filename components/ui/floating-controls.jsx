@@ -4,7 +4,7 @@ const FloatingControls = ({
   muted,
   playing,
   toggleAudio,
-  toggleVideo,
+  // toggleVideo,
   leaveRoom,
   onTroubleshoot,
 }) => {
@@ -27,7 +27,7 @@ const FloatingControls = ({
 
         {/* Video Control */}
         <button
-          onClick={toggleVideo}
+          // onClick={toggleVideo}
           className={`p-3 rounded-2xl transition-all duration-200 shadow-lg ${
             !playing
               ? "bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white transform hover:scale-105"
@@ -46,7 +46,6 @@ const FloatingControls = ({
         >
           <PhoneOff size={18} />
         </button>
-
       </div>
     </div>
   );

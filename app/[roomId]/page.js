@@ -21,7 +21,7 @@ import PermissionRequest from "@/components/ui/permission-request";
 
 const Room = () => {
   const socket = useSocket();
-  const { roomId } = useParams(); 
+  const { roomId } = useParams();
   const { peer, myId } = usePeer();
   const {
     stream,
@@ -47,7 +47,7 @@ const Room = () => {
     leaveRoom,
   } = usePlayer(myId, roomId, peer, {
     toggleAudio: toggleStreamAudio,
-    toggleVideo: toggleStreamVideo,
+    toggleVideo: () => {}, //toggleStreamVideo,
     isAudioEnabled,
     isVideoEnabled,
   });
@@ -305,13 +305,13 @@ const Room = () => {
 
   // Apply audio output device to all players when it changes
   useEffect(() => {
-    if (selectedAudioOutput && selectedAudioOutput !== 'default') {
+    if (selectedAudioOutput && selectedAudioOutput !== "default") {
       // Apply to all video elements in the page
-      const videoElements = document.querySelectorAll('video');
-      videoElements.forEach(video => {
+      const videoElements = document.querySelectorAll("video");
+      videoElements.forEach((video) => {
         if (video.setSinkId) {
-          video.setSinkId(selectedAudioOutput).catch(err => {
-            console.warn('Failed to set audio output device:', err);
+          video.setSinkId(selectedAudioOutput).catch((err) => {
+            console.warn("Failed to set audio output device:", err);
           });
         }
       });
@@ -321,7 +321,7 @@ const Room = () => {
   return (
     <>
       {/* Permission Request Overlay */}
-      {(mediaError || !permissions.audio || !permissions.video) && (
+      {(mediaError || !permissions.audio ) && (
         <PermissionRequest
           error={mediaError}
           permissions={permissions}
@@ -346,9 +346,7 @@ const Room = () => {
               players={players}
               highlightedPlayerId={
                 playerHighlighted
-                  ? Object.keys(players).find(
-                      (id) => players[id] === playerHighlighted
-                    )
+                  ? Object.keys(players).find((id) => id === myId)
                   : null
               }
               onPlayerClick={(playerId) => {
@@ -373,7 +371,7 @@ const Room = () => {
             muted={!isAudioEnabled} // When audio is OFF, show as muted
             playing={isVideoEnabled}
             toggleAudio={toggleAudio}
-            toggleVideo={toggleVideo}
+            // toggleVideo={toggleVideo}
             leaveRoom={leaveRoom}
             onTroubleshoot={() => setShowTroubleshooter(true)}
           />
